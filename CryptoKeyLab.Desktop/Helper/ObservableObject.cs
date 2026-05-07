@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CryptoKeyLab.Desktop.Services
+namespace CryptoKeyLab.Desktop.Helper
 {
     public class ObservableObject : INotifyPropertyChanged
     {
