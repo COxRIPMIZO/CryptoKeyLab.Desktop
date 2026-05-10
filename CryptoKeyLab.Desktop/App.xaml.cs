@@ -74,8 +74,12 @@ namespace CryptoKeyLab.Desktop
                 //register services here
                 services.AddTransient<IApiKeyService, ApiKeyService>();
 
+                //injecting the ef for user
+                services.AddTransient<IAuthService, AuthService>();
+
                 //register view models here
                 services.AddTransient<ApiKeyViewModel>();
+                services.AddTransient<LoginViewModel>();
 
                 //register views here
                 services.AddTransient<LoginView>();
@@ -95,9 +99,9 @@ namespace CryptoKeyLab.Desktop
             await _host.StartAsync();
 
             //show the main window
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+            //var mainWindow = _host.Services.GetRequiredService<MainWindow>();
 
-            //var mainWindow = _host.Services.GetRequiredService<LoginView>();
+            var mainWindow = _host.Services.GetRequiredService<LoginView>();
 
             //display window
             mainWindow.Show();

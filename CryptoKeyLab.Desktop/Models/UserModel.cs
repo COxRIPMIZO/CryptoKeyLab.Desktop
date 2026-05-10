@@ -19,5 +19,8 @@ namespace CryptoKeyLab.Desktop.Models
 
         [Required]
         public string? Password { get; set; }
+
+        [Required]
+        public string? ApiKey { get; set; }
     }
 }
