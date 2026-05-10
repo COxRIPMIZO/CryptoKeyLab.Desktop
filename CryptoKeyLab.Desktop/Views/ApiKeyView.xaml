@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CryptoKeyLab.Desktop.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="450">
    
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="API Key Management" FontSize="20" FontWeight="Bold" Margin="10"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Foreground="Beige" HorizontalAlignment="Center" Text="API Key Management" FontSize="20" FontWeight="Bold" Margin="10"/>
 
         <StackPanel Grid.Row="2">
             <Button Content="Get your ApiKey" Height="40" Margin="3,3,3,3" FontWeight="Bold" FontSize="18"
@@ -35,7 +35,7 @@
             <TextBlock Text="Your total usage:" FontSize="16" FontWeight="SemiBold" Margin="3,3,3,3"/>
             <TextBox Name="ApiKeyTotalUsageTextBox" Text="{Binding ApiKey.UsageCount}" IsReadOnly="True" FontSize="14" Padding="5" Margin="3,3,3,3"/>
 
-            <TextBlock Text="{Binding ApiKey.Message}" FontSize="16" FontWeight="SemiBold" Margin="3,3,3,3"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding ApiKey.Message}" Foreground="Red" FontSize="16" FontWeight="SemiBold" Margin="3,3,3,3"/>
 
         </StackPanel>
 

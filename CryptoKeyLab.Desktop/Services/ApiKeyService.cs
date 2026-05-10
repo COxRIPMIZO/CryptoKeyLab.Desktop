@@ -1,6 +1,8 @@
 ﻿using CryptoKeyLab.Desktop.Interfaces;
 using CryptoKeyLab.Desktop.Models;
+using CryptoKeyLab.Desktop.Models.Configuration;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +17,8 @@ namespace CryptoKeyLab.Desktop.Services
 {
     public class ApiKeyService : IApiKeyService
     {
-        private readonly IConfiguration _configuration;
-        public ApiKeyService(IConfiguration configuration)
+        private readonly IOptions<AppSettingModel> _configuration;
+        public ApiKeyService(IOptions<AppSettingModel> configuration)
         {
             _configuration = configuration;
         }
@@ -26,7 +28,7 @@ namespace CryptoKeyLab.Desktop.Services
             using (HttpClient client = new HttpClient())
             {
                 //1 form base url
-                string url = "https://localhost:7036/api/Access/GenerateTemporaryKey";
+                string url = $"{_configuration.Value.ApiBaseUrl}Access/GenerateTemporaryKey";
 
                 // 2. send request to api for new api key
                 var response = await client.PostAsync(url, null);

@@ -14,9 +14,37 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.7" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Configuration\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+	
+<!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="
+if not exist &quot;$(TargetDir)CSPL_OCRLibs&quot; mkdir &quot;$(TargetDir)CSPL_OCRLibs&quot;
+
+:: 1. Move everything to the subfolder first
+move /y &quot;$(TargetDir)*.dll&quot; &quot;$(TargetDir)CSPL_OCRLibs\&quot;
+
+:: 2. Bring your main application DLL back to the root so the exe can run
+move /y &quot;$(TargetDir)CSPL_OCRLibs\$(TargetName).dll&quot; &quot;$(TargetDir)&quot;" />
+
+	</Target>-->
 
 </Project>
