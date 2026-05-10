@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,24 @@ namespace CryptoKeyLab.Desktop.Services
             var users = await _appDbContext.Users.FirstOrDefaultAsync(app => app.UserName == userName && app.Password == passWord);
 
             return users!;
+        }
+
+        public async Task<bool> AddNewUser(UserModel user)
+        {
+            bool isUserAdded = false;
+            try
+            {
+                await _appDbContext.Users.AddAsync(user);
+                _appDbContext.SaveChanges();
+
+                isUserAdded = true;
+            }
+            catch (Exception)
+            {
+                throw new Exception("User registration failed.");
+            }
+            
+            return isUserAdded;
         }
     }
 }

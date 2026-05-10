@@ -1,10 +1,12 @@
 ﻿using CryptoKeyLab.Desktop.Helper;
 using CryptoKeyLab.Desktop.Interfaces;
 using CryptoKeyLab.Desktop.Models;
+using CryptoKeyLab.Desktop.Views;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,6 +17,7 @@ namespace CryptoKeyLab.Desktop.ViewModels
     public class LoginViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
+        private readonly UserRegistrationViewModel userRegistrationViewModel;
         public UserModel UserModel { get; set; }
 
 
@@ -40,12 +43,15 @@ namespace CryptoKeyLab.Desktop.ViewModels
         }
 
         public ICommand AuthenticateLogin { get; private set; }
+        public ICommand OpenRegistrationWindowCommand { get; private set; }
 
-        public LoginViewModel(IAuthService authService)
+        public LoginViewModel(IAuthService authService,UserRegistrationViewModel _UserRegistartion)
         {
             UserModel = new UserModel();
             _authService = authService;
+            userRegistrationViewModel = _UserRegistartion;
             AuthenticateLogin = new RelayCommand<object>(async _ => await AuthUser());
+            OpenRegistrationWindowCommand = new RelayCommand<object>(async _ => await OpenRegistrationWindow());
         }
 
         private async Task AuthUser()
@@ -56,6 +62,12 @@ namespace CryptoKeyLab.Desktop.ViewModels
             Result = user is null ? "User not found or wrong credential." : string.Empty;
 
             ResultColor = user is null ? Brushes.Red : Brushes.Green;
+        }
+
+        private async Task OpenRegistrationWindow() 
+        {
+            UserRegistrationView userRegistrationView = new(userRegistrationViewModel);
+            userRegistrationView.ShowDialog();
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CryptoKeyLab.Desktop.Views"
         mc:Ignorable="d"
         Title="LoginView" Height="450" Width="600">
-    
+
 
     <Grid>
         <!-- MAIN GRID: Splits the window into two big sections -->
@@ -42,6 +42,10 @@
                 <!-- Password Label -->
                 <RowDefinition Height="Auto"/>
                 <!-- Password Field -->
+
+                <!-- result Field -->
+                <RowDefinition Height="auto"/>
+
                 <RowDefinition Height="Auto"/>
                 <!-- Login Button -->
 
@@ -57,9 +61,18 @@
             <TextBlock Grid.Row="3" Text="Password" Margin="0,10,0,5"/>
             <TextBox Text="{Binding UserModel.Password}" Grid.Row="4" Padding="5"/>
 
-            <Button Command="{Binding AuthenticateLogin}" Grid.Row="5" Content="LOGIN" Margin="0,20,0,0" Height="35" Background="DodgerBlue" Foreground="White"/>
+            <!-- CommandParameter="{Binding ElementName=CurrentLoginWindow}"-->
+            <TextBlock Grid.Row="5" HorizontalAlignment="Center" Margin="3,15,3,3">
+                <Run Text="Don't have an account? " Foreground="Gray"/>
+                <Hyperlink Command="{Binding OpenRegistrationWindowCommand}">
+                    Create New Account
+                </Hyperlink>    
+            </TextBlock>
+
+            <Button Command="{Binding AuthenticateLogin}" Grid.Row="6" Content="LOGIN" Margin="3,3,3,3" Height="35" Background="DodgerBlue" Foreground="White"/>
 
             <TextBlock Text="{Binding Result}" Grid.Row="6" Foreground="{Binding ResultColor}" Margin="0,10,0,0" TextWrapping="Wrap"/>
+
         </Grid>
     </Grid>
 
