@@ -1,12 +1,15 @@
 ﻿using CryptoKeyLab.Desktop.Helper;
 using CryptoKeyLab.Desktop.Interfaces;
 using CryptoKeyLab.Desktop.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -55,6 +58,7 @@ namespace CryptoKeyLab.Desktop.ViewModels
         /// Command for new user registration
         /// </summary>
         public ICommand RegisterUserCommand { get; set; }
+        public ICommand CloseWindowCommand { get; set; }
 
         public UserRegistrationViewModel(IAuthService service,IApiKeyService apiKeyService)
         {
@@ -63,10 +67,22 @@ namespace CryptoKeyLab.Desktop.ViewModels
             _apiKeyService = apiKeyService;
 
             //create new command
-            RegisterUserCommand = new RelayCommand<object>(async _ => await AddNewUser());
+            RegisterUserCommand = new RelayCommand<object>(async parama => await AddNewUser(parama));
+            CloseWindowCommand = new RelayCommand<object>(param => CloseWindow(param));
         }
 
-        private async Task AddNewUser()
+        private void CloseWindow(object param)
+        {
+            // Implement logic to close the window, e.g., using an event or a messaging system
+            if (param is Window window)
+                window.Close();
+        }
+
+        /// <summary>
+        /// Add new user to database and get new apikey
+        /// </summary>
+        /// <returns></returns>
+        private async Task AddNewUser(object param)
         {
             //get brand new api key
             var apiKey = await _apiKeyService.GetApiKey();
@@ -87,6 +103,11 @@ namespace CryptoKeyLab.Desktop.ViewModels
             { 
                 Result = "User registration completed.";
                 ResultColor = Brushes.Green;
+
+                await Task.Delay(2000);
+
+                //close the window
+                CloseWindow(param);
             }
             else
             {

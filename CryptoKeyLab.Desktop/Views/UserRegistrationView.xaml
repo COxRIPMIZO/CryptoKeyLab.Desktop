@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CryptoKeyLab.Desktop.Views"
         mc:Ignorable="d"
-        Title="UserRegistrationView" Height="450" Width="600">
+        Title="Create new account" Height="450" Width="600" WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="CurrentRegisterWindow">
         <!-- MAIN GRID: Splits the window into two big sections -->
@@ -68,6 +68,7 @@
                 <!--CommandParameter="{Binding ElementName=RegPasswordBox}"  Create Button -->
                 <Button Content="Create" 
                     Command="{Binding RegisterUserCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Grid.Column="0" 
                     Margin="0,0,5,0" 
                     Height="35" 
@@ -76,7 +77,8 @@
 
                 <!-- CommandParameter="{Binding ElementName=CurrentRegisterWindow}" Cancel Button -->
                 <Button Content="Cancel" 
-                    Command="{Binding CancelCommand}" 
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Grid.Column="1" 
                     Margin="5,0,0,0" 
                     Height="35" 

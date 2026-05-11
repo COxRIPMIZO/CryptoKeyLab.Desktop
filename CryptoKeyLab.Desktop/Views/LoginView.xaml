@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CryptoKeyLab.Desktop.Views"
         mc:Ignorable="d"
-        Title="LoginView" Height="450" Width="600">
+        Title="Login into CryptoKeyLab.Desktop" Height="450" Width="600" WindowStartupLocation="CenterScreen">
 
 
     <Grid>
