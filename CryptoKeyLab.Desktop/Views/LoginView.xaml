@@ -1,79 +1,83 @@
 ﻿<Window x:Class="CryptoKeyLab.Desktop.Views.LoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:d="http://schemas.expression"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CryptoKeyLab.Desktop.Views"
         mc:Ignorable="d"
-        Title="LoginView" Height="450" Width="600">
-
+        Title="Login into CryptoKeyLab.Desktop" Height="400" Width="500" WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <!-- MAIN GRID: Splits the window into two big sections -->
+        <!-- MAIN GRID: Splits the window into Left and Right sections -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <!-- Left Section -->
             <ColumnDefinition Width="2*" />
-            <!-- Right Section (wider) -->
+            <!-- Right Section -->
         </Grid.ColumnDefinitions>
 
         <!-- 1. LEFT SIDE (Sidebar/Logo area) -->
         <Grid Grid.Column="0" Background="#2C3E50">
             <TextBlock Text="CryptoKeyLab" 
-                   Foreground="White" 
-                   FontSize="24" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" 
-                   TextWrapping="Wrap" 
-                   TextAlignment="Center"/>
+                       Foreground="White" 
+                       FontSize="24" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       TextAlignment="Center" />
         </Grid>
 
-        <!-- 2. RIGHT SIDE (Login Form) -->
-        <Grid Grid.Column="1" Margin="40">
-            <!-- NESTED GRID: Specifically for organizing the form items -->
+        <!-- 2. RIGHT SIDE (Form + Health Status Container) -->
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <!-- Title -->
-                <RowDefinition Height="Auto"/>
-                <!-- Username Label -->
-                <RowDefinition Height="Auto"/>
-                <!-- Username Field -->
-                <RowDefinition Height="Auto"/>
-                <!-- Password Label -->
-                <RowDefinition Height="Auto"/>
-                <!-- Password Field -->
-
-                <!-- result Field -->
-                <RowDefinition Height="auto"/>
-
-                <RowDefinition Height="Auto"/>
-                <!-- Login Button -->
-
-                <!-- result Field -->
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*" />
+                <!-- Form takes all available top space -->
+                <RowDefinition Height="Auto" />
+                <!-- Status view takes exactly what it needs at the bottom -->
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Login" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+            <!-- LOGIN FORM (Inside Row 0) -->
+            <Grid Grid.Row="0" Margin="40,40,40,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Title -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Username Label -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Username Field -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Password Label -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Password Field -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Register Link -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Login Button -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Result Message -->
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="1" Text="Username" Margin="0,10,0,5"/>
-            <TextBox Text="{Binding UserModel.UserName}"  Grid.Row="2" Padding="5"/>
+                <TextBlock Grid.Row="0" Text="Login" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
 
-            <TextBlock Grid.Row="3" Text="Password" Margin="0,10,0,5"/>
-            <TextBox Text="{Binding UserModel.Password}" Grid.Row="4" Padding="5"/>
+                <TextBlock Grid.Row="1" Text="Username" Margin="0,10,0,5"/>
+                <TextBox Text="{Binding UserModel.UserName}" Grid.Row="2" Padding="5"/>
 
-            <!-- CommandParameter="{Binding ElementName=CurrentLoginWindow}"-->
-            <TextBlock Grid.Row="5" HorizontalAlignment="Center" Margin="3,15,3,3">
-                <Run Text="Don't have an account? " Foreground="Gray"/>
-                <Hyperlink Command="{Binding OpenRegistrationWindowCommand}">
-                    Create New Account
-                </Hyperlink>    
-            </TextBlock>
+                <TextBlock Grid.Row="3" Text="Password" Margin="0,10,0,5"/>
+                <TextBox Text="{Binding UserModel.Password}" Grid.Row="4" Padding="5"/>
 
-            <Button Command="{Binding AuthenticateLogin}" Grid.Row="6" Content="LOGIN" Margin="3,3,3,3" Height="35" Background="DodgerBlue" Foreground="White"/>
+                <TextBlock Grid.Row="5" HorizontalAlignment="Center" Margin="3,15,3,15">
+                    <Run Text="Don't have an account? " Foreground="Gray"/>
+                    <Hyperlink Command="{Binding OpenRegistrationWindowCommand}">Create New Account</Hyperlink>
+                </TextBlock>
 
-            <TextBlock Text="{Binding Result}" Grid.Row="6" Foreground="{Binding ResultColor}" Margin="0,10,0,0" TextWrapping="Wrap"/>
+                <Button Command="{Binding AuthenticateLogin}" Grid.Row="6" Content="LOGIN" Margin="3,3,3,3" Height="35" Background="DodgerBlue" Foreground="White"/>
 
+                <!-- Fixed Grid.Row conflict: Moved Result text to Row 7 so it doesn't overlap the button -->
+                <TextBlock Text="{Binding Result}" Grid.Row="7" Foreground="{Binding ResultColor}" Margin="0,10,0,0" TextWrapping="Wrap"/>
+            </Grid>
+
+            <!-- API HEALTH STATUS (Inside Row 1 - Cleanly placed at the bottom right) -->
+            <!--<local: Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,20,21" Width="113" />-->
         </Grid>
     </Grid>
-
 </Window>

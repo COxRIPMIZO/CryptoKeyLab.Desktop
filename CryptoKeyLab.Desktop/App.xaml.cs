@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using System.Configuration;
 using System.Data;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 using System.Windows;
 
@@ -77,18 +78,33 @@ namespace CryptoKeyLab.Desktop
                 //injecting the ef for user
                 services.AddTransient<IAuthService, AuthService>();
 
+                services.AddTransient<IHashAlgorithmService, HashAlgorithmService>();
+                services.AddTransient<IEncodingAlgorithmService, EncodingAlgorithmService>();
+
+
                 //injecting user registration sercvice
+
+                services.AddTransient<HttpClient>();
+                services.AddTransient<ApiHealthStatusService>();
+                services.AddTransient<PeriodicTimer>(provider => new PeriodicTimer(TimeSpan.FromSeconds(5)));
+                services.AddTransient<CancellationTokenSource>(_ => new CancellationTokenSource());
 
                 //register view models here
                 services.AddTransient<ApiKeyViewModel>();
                 services.AddTransient<LoginViewModel>();
                 services.AddTransient<UserRegistrationViewModel>();
+                services.AddTransient<ApiHealthStatusViewModel>();
+                services.AddTransient<PlayGroundViewModel>();
 
                 //register views here
                 services.AddTransient<LoginView>();
                 services.AddTransient<ApiKeyView>();
+                services.AddTransient<ApiHealthStatusView>();
                 services.AddTransient<MainWindow>();
                 services.AddTransient<UserRegistrationView>();
+
+
+                services.AddTransient<PlayGroundView>();
 
             }).Build();
         }
@@ -105,7 +121,8 @@ namespace CryptoKeyLab.Desktop
             //show the main window
             //var mainWindow = _host.Services.GetRequiredService<MainWindow>();
 
-            var mainWindow = _host.Services.GetRequiredService<LoginView>();
+            //var mainWindow = _host.Services.GetRequiredService<LoginView>();
+            var mainWindow = _host.Services.GetRequiredService<PlayGroundView>();
             //var mainWindow = _host.Services.GetRequiredService<UserRegistrationView>();
 
             //display window

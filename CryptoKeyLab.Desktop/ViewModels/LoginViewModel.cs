@@ -2,6 +2,7 @@
 using CryptoKeyLab.Desktop.Interfaces;
 using CryptoKeyLab.Desktop.Models;
 using CryptoKeyLab.Desktop.Views;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,7 +18,8 @@ namespace CryptoKeyLab.Desktop.ViewModels
     public class LoginViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
-        private readonly UserRegistrationViewModel userRegistrationViewModel;
+
+        private readonly IServiceProvider _servicesProvider;
         public UserModel UserModel { get; set; }
 
 
@@ -44,14 +46,13 @@ namespace CryptoKeyLab.Desktop.ViewModels
 
         public ICommand AuthenticateLogin { get; private set; }
         public ICommand OpenRegistrationWindowCommand { get; private set; }
-
-        public LoginViewModel(IAuthService authService,UserRegistrationViewModel _UserRegistartion)
+        public LoginViewModel(IAuthService authService, IServiceProvider serviceProvider)
         {
             UserModel = new UserModel();
             _authService = authService;
-            userRegistrationViewModel = _UserRegistartion;
+            _servicesProvider = serviceProvider;
             AuthenticateLogin = new RelayCommand<object>(async _ => await AuthUser());
-            OpenRegistrationWindowCommand = new RelayCommand<object>(async _ => await OpenRegistrationWindow());
+            OpenRegistrationWindowCommand = new RelayCommand<object>(_ => OpenRegistrationWindow());
         }
 
         private async Task AuthUser()
@@ -64,9 +65,10 @@ namespace CryptoKeyLab.Desktop.ViewModels
             ResultColor = user is null ? Brushes.Red : Brushes.Green;
         }
 
-        private async Task OpenRegistrationWindow() 
+        private void OpenRegistrationWindow() 
         {
-            UserRegistrationView userRegistrationView = new(userRegistrationViewModel);
+            UserRegistrationView userRegistrationView = _servicesProvider.GetRequiredService<UserRegistrationView>();
+
             userRegistrationView.ShowDialog();
         }
     }
