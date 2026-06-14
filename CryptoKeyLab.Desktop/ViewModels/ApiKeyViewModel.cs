@@ -22,7 +22,8 @@ namespace CryptoKeyLab.Desktop.ViewModels
             set
             {
                 _apiKey = value;
-                OnPropertyChanged(nameof(ApiKey));            }
+                OnPropertyChanged(nameof(ApiKey));            
+            }
         }
 
         public ICommand GetApiKeyCommand { get; private set; }

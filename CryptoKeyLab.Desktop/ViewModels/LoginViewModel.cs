@@ -18,7 +18,6 @@ namespace CryptoKeyLab.Desktop.ViewModels
     public class LoginViewModel : ObservableObject
     {
         private readonly IAuthService _authService;
-        //private readonly UserRegistrationViewModel userRegistrationViewModel;
 
         private readonly IServiceProvider _servicesProvider;
         public UserModel UserModel { get; set; }
@@ -47,15 +46,6 @@ namespace CryptoKeyLab.Desktop.ViewModels
 
         public ICommand AuthenticateLogin { get; private set; }
         public ICommand OpenRegistrationWindowCommand { get; private set; }
-
-        //public LoginViewModel(IAuthService authService,UserRegistrationViewModel _UserRegistartion)
-        //{
-        //    UserModel = new UserModel();
-        //    _authService = authService;
-        //    userRegistrationViewModel = _UserRegistartion;
-        //    AuthenticateLogin = new RelayCommand<object>(async _ => await AuthUser());
-        //    OpenRegistrationWindowCommand = new RelayCommand<object>(_ => OpenRegistrationWindow());
-        //}
         public LoginViewModel(IAuthService authService, IServiceProvider serviceProvider)
         {
             UserModel = new UserModel();
@@ -77,8 +67,6 @@ namespace CryptoKeyLab.Desktop.ViewModels
 
         private void OpenRegistrationWindow() 
         {
-            //UserRegistrationView userRegistrationView = new(userRegistrationViewModel);
-
             UserRegistrationView userRegistrationView = _servicesProvider.GetRequiredService<UserRegistrationView>();
 
             userRegistrationView.ShowDialog();

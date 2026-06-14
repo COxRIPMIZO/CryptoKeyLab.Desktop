@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -38,6 +39,8 @@
             <TextBlock TextWrapping="Wrap" Text="{Binding ApiKey.Message}" Foreground="Red" FontSize="16" FontWeight="SemiBold" Margin="3,3,3,3"/>
 
         </StackPanel>
+
+        <!--<local:ApiHealthStatusView Grid.Row="3" Height="30" Width="150" Margin="250,3,3,3"/>-->
 
     </Grid>
 </UserControl>
