@@ -152,7 +152,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Margin="0,0,0,-16">
         <Grid.ColumnDefinitions>
             <!-- Set to Auto so it collapses completely when Sidebar is collapsed -->
             <ColumnDefinition x:Name="SidebarColumn" Width="Auto"/>
@@ -269,18 +269,23 @@
 
                             <StackPanel Grid.Row="1" Margin="0,0,0,25">
                                 <TextBlock Text="Plaintext Source String" Foreground="{StaticResource TextMuted}" FontSize="12" FontWeight="Bold" Margin="0,0,0,8"/>
-                                <TextBox Style="{StaticResource ModernTextBoxStyle}" Height="80" TextWrapping="Wrap" AcceptsReturn="True" Text="Enter text to hash here..."/>
+                                <TextBox Style="{StaticResource ModernTextBoxStyle}" Height="80" TextWrapping="Wrap" 
+                                         AcceptsReturn="True" Text="{Binding ApiRequest.PlaintText,UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,30">
-                                <Button Content="🔒 Generate Hash String" Style="{StaticResource PrimaryActionBtnStyle}" Width="220" Height="45"/>
+                                <Button Content="🔒 Generate Hash String" 
+                                        Style="{StaticResource PrimaryActionBtnStyle}" 
+                                        Width="220" Height="45" Command="{Binding ComputHashAlgorithmCommand}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="3">
                                 <TextBlock Text="Cryptographic Hash Output" Foreground="{StaticResource SuccessColor}" FontSize="12" FontWeight="Bold" Margin="0,0,0,8"/>
-                                <TextBox Style="{StaticResource ModernTextBoxStyle}" Height="120" Background="#060A11" Foreground="#10B981" 
-                                         IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" FontFamily="Consolas" FontSize="14"
-                                         Text="Awaiting computation..."/>
+                                <TextBox Style="{StaticResource ModernTextBoxStyle}" 
+                                         Height="120" Background="#060A11" Foreground="#10B981" 
+                                         IsReadOnly="True" AcceptsReturn="True" 
+                                         TextWrapping="Wrap" FontFamily="Consolas" FontSize="14"
+                                         Text="{Binding ApiResponseHashing.Output,UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -306,18 +311,27 @@
 
                             <StackPanel Grid.Row="1" Margin="0,0,0,25">
                                 <TextBlock Text="Source Data Buffer" Foreground="{StaticResource TextMuted}" FontSize="12" FontWeight="Bold" Margin="0,0,0,8"/>
-                                <TextBox Style="{StaticResource ModernTextBoxStyle}" Height="80" TextWrapping="Wrap" Text="Enter text to encode or decode..."/>
+                                <TextBox Style="{StaticResource ModernTextBoxStyle}" 
+                                         Height="80" TextWrapping="Wrap" 
+                                         Text="{Binding EncodingInput,UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,30">
-                                <Button Content="📦 Encode Data" Style="{StaticResource PrimaryActionBtnStyle}" Width="180" Height="45" Margin="0,0,15,0"/>
-                                <Button Content="🔓 Decode Data" Style="{StaticResource SecondaryActionBtnStyle}" Foreground="{StaticResource TextBright}" Width="180" Height="45"/>
+                                <Button Content="📦 Encode Data" Command="{Binding ComputEncodingAlgorithmCommand}"
+                                        Style="{StaticResource PrimaryActionBtnStyle}"
+                                        Width="180" Height="45" Margin="0,0,15,0"/>
+                                <Button Content="🔓 Decode Data" Style="{StaticResource SecondaryActionBtnStyle}" 
+                                        Foreground="{StaticResource TextBright}" 
+                                        Width="180" Visibility="Hidden" Height="45"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="3">
                                 <TextBlock Text="Encoded / Decoded Output Matrix" Foreground="{StaticResource AccentHover}" FontSize="12" FontWeight="Bold" Margin="0,0,0,8"/>
-                                <TextBox Style="{StaticResource ModernTextBoxStyle}" Height="120" Background="#060A11" Foreground="{StaticResource AccentHover}" 
-                                         IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" FontFamily="Consolas" FontSize="14" Text="Result will appear here..."/>
+                                <TextBox Style="{StaticResource ModernTextBoxStyle}" Height="120" 
+                                         Background="#060A11" Foreground="{StaticResource AccentHover}" 
+                                         IsReadOnly="True" AcceptsReturn="True" 
+                                         TextWrapping="Wrap" FontFamily="Consolas" 
+                                         FontSize="14" Text="{Binding ApiResponseEncoding.Output,UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </Grid>
                     </Border>

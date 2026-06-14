@@ -9,7 +9,7 @@ namespace CryptoKeyLab.Desktop.Models.Response
 {
     public class ApiResponse : ObservableObject
     {
-        private string? output;
+        private string? output = "Awaiting computation...";
         private decimal timeTakenMilliSeconds;
 
         public string? Output

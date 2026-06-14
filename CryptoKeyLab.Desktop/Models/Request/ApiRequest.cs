@@ -10,28 +10,28 @@ namespace CryptoKeyLab.Desktop.Models.Request
 {
     public class ApiRequest : ObservableObject
     {
-        //private string? plaintText;
-        private string? AlgorithmName;
-        private HashOptionsModel hashOptionsModel;
+        private string? plaintText = "Enter text to hash here...";
+        //private string? AlgorithmName = string.Empty;
+        private HashOptionsModel hashOptionsModel = new();
 
-        //public string? PlaintText
-        //{
-        //    get => plaintText;
-        //    set
-        //    {
-        //        plaintText = value;
-        //        OnPropertyChanged(nameof(PlaintText));
-        //    }
-        //}
-        public string? Algorithm
+        public string? PlaintText
         {
-            get => AlgorithmName;
+            get => plaintText;
             set
             {
-                AlgorithmName = value;
-                OnPropertyChanged(nameof(Algorithm));
+                plaintText = value;
+                OnPropertyChanged(nameof(PlaintText));
             }
         }
+        //public string? Algorithm
+        //{
+        //    get => AlgorithmName;
+        //    set
+        //    {
+        //        AlgorithmName = value;
+        //        OnPropertyChanged(nameof(Algorithm));
+        //    }
+        //}
         public HashOptionsModel HashOptions
         {
             get => hashOptionsModel;

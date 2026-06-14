@@ -1,5 +1,6 @@
 ﻿using CryptoKeyLab.Desktop.Interfaces;
 using CryptoKeyLab.Desktop.Models.Configuration;
+using CryptoKeyLab.Desktop.Models.Request;
 using CryptoKeyLab.Desktop.Models.Response;
 using Microsoft.Extensions.Options;
 using System;
@@ -21,6 +22,33 @@ namespace CryptoKeyLab.Desktop.Services
             _options = options;
             _httpClient = httpClient;
         }
+
+        public async Task<ApiResponse> ComputeHashAsync(string AlgoName, HashOptionsModel hashOptionsModel)
+        {
+            //1. create the request url
+            var url = $"{_options.Value.ApiBaseUrl}Hash/ComputeHash?algorithmName={Uri.EscapeDataString(AlgoName)}";
+
+            //2. create custom http post request
+            using var request = new HttpRequestMessage(HttpMethod.Post,url);
+
+            //3. add header for the request
+            request.Headers.Add(_options.Value.ApiHeaderName,_options.Value.ApiKey);
+
+            //4.add the hash options model as json content to the request
+            request.Content = JsonContent.Create(hashOptionsModel);
+
+            //send request and get response
+            var response = await _httpClient.SendAsync(request);
+
+            //6. ensure the response is successful, if not throw an exception
+            response.EnsureSuccessStatusCode();
+
+            //7.read and deserialize the json response content into apiresponse model
+            var data = await response.Content.ReadFromJsonAsync<ApiResponse>();
+
+            return data ?? new ApiResponse { Output = "No output", TimeTakenMilliSeconds = 0 };
+        }
+
         public async Task<IEnumerable<HashAlgorithmsResponse>> GetHashAlgorithmsAsync()
         {
             var url = $"{_options.Value.ApiBaseUrl}Hash/Algorithms";
